@@ -184,3 +184,4 @@ class PaCo(object):
         print("Number of bi-groups:: ", len(self.list_row) * len(self.list_col))
         print("Number of bi-groups needing recommendations:: ", self.density[np.logical_and(self.density != 1,
                                                                                             self.density != 0)].size)
+#
