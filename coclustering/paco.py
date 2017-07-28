@@ -150,7 +150,6 @@ class PaCo(object):
 
         # 3st step: training the algorithm
         while criteria:
-            print('Epoch:: ', count_epoch, " | Entropy:: ", entropy0)
             old_list_row, old_list_col = self.list_row.copy(), self.list_col.copy()
             distance_rows = np.divide(np.float32(squareform(pdist(self.density, 'euclidean'))), self.density.shape[1])
             distance_cols = np.divide(np.float32(squareform(pdist(self.density.T, 'euclidean'))), self.density.shape[0])
@@ -172,9 +171,10 @@ class PaCo(object):
                 self.list_row, self.list_col = old_list_row, old_list_col
                 self.update_information()
                 criteria = False
-
-            entropy0 = entropy
-            count_epoch += 1
+            else:
+                print('Epoch:: ', count_epoch, " | Entropy:: ", entropy0)
+                entropy0 = entropy
+                count_epoch += 1
 
         return entropy0
 
