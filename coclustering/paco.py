@@ -172,7 +172,7 @@ class PaCo(object):
                 self.update_information()
                 criteria = False
             else:
-                print('Epoch:: ', count_epoch, " | Entropy:: ", entropy0)
+                print('Epoch:: ', count_epoch, " | Entropy:: ", entropy)
                 entropy0 = entropy
                 count_epoch += 1
 
