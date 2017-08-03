@@ -150,7 +150,7 @@ class PaCo(object):
 
         # 3st step: training the algorithm
         while criteria:
-            old_list_row, old_list_col = self.list_row.copy(), self.list_col.copy()
+            old_density, old_list_row, old_list_col = self.density.copy(), self.list_row.copy(), self.list_col.copy()
             distance_rows = np.divide(np.float32(squareform(pdist(self.density, 'euclidean'))), self.density.shape[1])
             distance_cols = np.divide(np.float32(squareform(pdist(self.density.T, 'euclidean'))), self.density.shape[0])
             min_row = self.return_min_value(distance_rows)
@@ -168,8 +168,7 @@ class PaCo(object):
             mean_range, std_range = np.mean(self.delta_entropy), np.std(self.delta_entropy)
 
             if not mean_range - 3 * std_range <= dif_entropy <= mean_range + 3 * std_range:
-                self.list_row, self.list_col = old_list_row, old_list_col
-                self.update_information()
+                self.density, self.list_row, self.list_col = old_density, old_list_row, old_list_col
                 criteria = False
             else:
                 print('Epoch:: ', count_epoch, " | Entropy:: ", entropy)
@@ -178,9 +177,13 @@ class PaCo(object):
 
         return entropy0
 
+    def return_bi_groups(self):
+        print(self.density[np.logical_and(self.density != 1, self.density != 0)])
+
     def execute(self):
         print("Final entropy::", self.train_model())
         print("Number of rows:: ", len(self.list_row), "Number of columns:: ", len(self.list_col))
         print("Number of bi-groups:: ", len(self.list_row) * len(self.list_col))
         print("Number of bi-groups needing recommendations:: ", self.density[np.logical_and(self.density != 1,
                                                                                             self.density != 0)].size)
+        self.return_bi_groups()
