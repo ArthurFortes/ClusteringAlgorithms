@@ -181,31 +181,31 @@ class PaCo(object):
     def return_bi_groups(self):
         print(self.density[np.logical_and(self.density != 1, self.density != 0)])
 
-	# filters the bigroups removing the ones with lower density, leaving the minimum to recommend to every user
+    # filters the bigroups removing the ones with lower density, leaving the minimum to recommend to every user
     def filter_bi_groups(self):
         filteredDensities = self.density.copy()
         filteredDensities[filteredDensities == 1] = np.nan
 
-        firstRun = True
+        first_run = True
         old = filteredDensities.copy()
-        while (True):
+        while True:
             for line in filteredDensities:
                 if np.nansum(line) == 0:
-                    if firstRun:
-                        return not np.isnan(self.density)
+                    if first_run:
+                        return np.logical_not(np.isnan(self.density))
                     else:
-                        return not np.isnan(old)
+                        return np.logical_not(np.isnan(old))
 
             old = filteredDensities.copy()
 
-            index = np.argmin(filteredDensities)
+            index = np.nanargmin(filteredDensities)
             line = index // filteredDensities.shape[1]
             col = index % filteredDensities.shape[1]
 
             filteredDensities[line, col] = np.nan
 
-            firstRun = False
-		
+            first_run = False
+
     def execute(self):
         print("Final entropy::", self.train_model())
         print("Number of rows:: ", len(self.list_row), "Number of columns:: ", len(self.list_col))
