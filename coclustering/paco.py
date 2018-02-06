@@ -178,7 +178,7 @@ class PaCo(object):
 
         return entropy0
 
-    # filters the bi-groups removing the ones with lower density, leaving the minimum to recommend to every user
+    # filters the bi-groups removing the ones with lower density,  leaving the minimum to recommend to every user
     def filter_relevant_bi_groups(self):
         filtered_densities = self.density.copy()
         filtered_densities[filtered_densities == 1] = np.nan
