@@ -1,5 +1,4 @@
 from scipy.spatial.distance import squareform, pdist
-from sklearn.metrics import silhouette_score
 import numpy as np
 
 
